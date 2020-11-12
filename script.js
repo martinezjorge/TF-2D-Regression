@@ -20,8 +20,6 @@ async function run() {
         y: d.mpg,
     }));
 
-    // const surface = tfvis.visor().surface({ name: 'Horsepower v MPG', tab: 'Plot'});
-
     tfvis.render.scatterplot(
         {name: 'Horsepower v MPG'},
         {values},
@@ -31,8 +29,23 @@ async function run() {
             height: 300
         }
     );
+    
+    // Create the model
+    const model = createModel();
+    tfvis.show.modelSummary({name: 'Model Summary'}, model);
+}
 
-    // More code will be added below
+function createModel() {
+    // Create a sequential model
+    const model = tf.sequential();
+
+    // Add a single input layer
+    model.add(tf.layers.dense({inputShape: [1], units: 1, useBias: true}));
+
+    // Add an output layer
+    model.add(tf.layers.dense({units: 1, useBias: true}));
+
+    return model;
 }
 
 document.addEventListener('DOMContentLoaded', run);
